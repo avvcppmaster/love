@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валентинка</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+        
+        .valentine-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .valentine-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            animation: float 20s linear infinite;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #ff4d6d;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .heart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff4d6d;
+            transform: rotate(45deg);
+            animation: heartbeat 1.2s infinite;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
+        }
+        
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff4d6d;
+            border-radius: 50%;
+        }
+        
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+        
+        .heart::after {
+            top: 0;
+            left: -50px;
+        }
+        
+        .heart i {
+            position: absolute;
+            color: white;
+            font-size: 40px;
+            transform: rotate(-45deg);
+            top: 30px;
+            left: 30px;
+            z-index: 2;
+        }
+        
+        .message {
+            background-color: #fff5f7;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff4d6d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: left;
+            position: relative;
+        }
+        
+        .message h2 {
+            color: #ff4d6d;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .message p {
+            color: #555;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .message .signature {
+            text-align: right;
+            font-style: italic;
+            color: #ff4d6d;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+        
+        .interactive {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 180px;
+        }
+        
+        .yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+        
+        .yes-btn:hover {
+            background-color: #ff3357;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.6);
+        }
+        
+        .no-btn {
+            background-color: #f0f0f0;
+            color: #555;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .no-btn:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-5px);
+        }
+        
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart-particle {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            opacity: 0;
+            animation: float-up 5s linear infinite;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes heartbeat {
+            0% {
+                transform: rotate(45deg) scale(1);
+            }
+            5% {
+                transform: rotate(45deg) scale(1.1);
+            }
+            10% {
+                transform: rotate(45deg) scale(1);
+            }
+            15% {
+                transform: rotate(45deg) scale(1.2);
+            }
+            20% {
+                transform: rotate(45deg) scale(1);
+            }
+            100% {
+                transform: rotate(45deg) scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .valentine-card {
+                padding: 25px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .message {
+                padding: 20px;
+            }
+            
+            .interactive {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .button {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .heart-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .heart {
+                width: 75px;
+                height: 75px;
+            }
+            
+            .heart::before,
+            .heart::after {
+                width: 75px;
+                height: 75px;
+            }
+            
+            .heart::before {
+                top: -37.5px;
+            }
+            
+            .heart::after {
+                left: -37.5px;
+            }
+            
+            .heart i {
+                font-size: 30px;
+                top: 22px;
+                left: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="valentine-card">
+        <div class="header">
+            <h1>С Днём Святого Валентина!</h1>
+            <p>Этот день создан для любви, и я хочу провести его с тобой</p>
+        </div>
+        
+        <div class="heart-container">
+            <div class="heart" id="mainHeart">
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        
+        <div class="message">
+            <h2>Моему любимому человеку,</h2>
+            <p>В этот особенный день я хочу сказать тебе, как много ты для меня значишь. Твоя улыбка освещает мои самые тёмные дни, твой смех — самая прекрасная музыка для моих ушей.</p>
+            <p>Каждый момент с тобой наполнен теплом и счастьем. Ты даришь мне крылья и вдохновляешь становиться лучше с каждым днём.</p>
+            <p>Я бесконечно благодарен судьбе за то, что ты появился в моей жизни. Ты — моё самое большое счастье, и я хочу провести с тобою все свои вальсинки в будущем.</p>
+            <p class="signature">С любовью,<br>Тот, кто всегда думает о тебе ❤️</p>
+        </div>
+        
+        <div class="interactive">
+            <button class="button yes-btn" id="yesBtn">
+                <i class="fas fa-heart"></i> Принять валентинку
+            </button>
+            <button class="button no-btn" id="noBtn">
+                <i class="fas fa-times"></i> Отказаться (шутка)
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p>Сделано с любовью для самого особенного человека ❤️</p>
+        </div>
+        
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <script>
+        // Анимация сердца при клике
+        const mainHeart = document.getElementById('mainHeart');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const heartsContainer = document.getElementById('heartsContainer');
+        
+        // Анимация сердца при клике
+        mainHeart.addEventListener('click', function() {
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = 'heartbeat 1.2s infinite';
+            }, 10);
+            
+            // Создаем летающие сердца
+            createFlyingHearts(10);
+        });
+        
+        // Кнопка "Принять валентинку"
+        yesBtn.addEventListener('click', function() {
+            alert('💖 Ура! Я так счастлив! Ты сделал(а) мой день особенным! 💖\n\nТеперь мы официально празднуем День Влюблённых вместе!');
+            createFlyingHearts(30);
+            
+            // Меняем текст кнопки
+            yesBtn.innerHTML = '<i class="fas fa-heart"></i> Вы приняли мою любовь!';
+            yesBtn.style.backgroundColor = '#ff3357';
+            yesBtn.style.transform = 'scale(1.1)';
+            
+            // Прячем кнопку отказа
+            noBtn.style.display = 'none';
+        });
+        
+        // Кнопка "Отказаться" - с юмором
+        noBtn.addEventListener('mouseover', function() {
+            // Случайное перемещение кнопки при наведении
+            const x = Math.random() * (window.innerWidth - this.offsetWidth);
+            const y = Math.random() * (window.innerHeight - this.offsetHeight);
+            
+            this.style.position = 'fixed';
+            this.style.left = `${x}px`;
+            this.style.top = `${y}px`;
+            
+            // Меняем текст при попытке наведения
+            if (Math.random() > 0.5) {
+                this.innerHTML = '<i class="fas fa-smile-wink"></i> Не убежишь!';
+            } else {
+                this.innerHTML = '<i class="fas fa-grin-tongue"></i> Попробуй поймать!';
+            }
+        });
+        
+        noBtn.addEventListener('click', function() {
+            alert('😉 Я знал, что ты просто шутишь! Никто не сможет устоять перед такой валентинкой! 💘');
+            this.innerHTML = '<i class="fas fa-heart"></i> Ладно, я согласен(а)!';
+            this.className = 'button yes-btn';
+            this.style.position = 'static';
+            
+            // Вешаем обработчик как на yesBtn
+            this.onmouseover = null;
+            this.onclick = function() {
+                yesBtn.click();
+            };
+        });
+        
+        // Функция создания летающих сердечек
+        function createFlyingHearts(count) {
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '❤';
+                
+                // Случайная позиция
+                const left = Math.random() * 100;
+                heart.style.left = `${left}%`;
+                
+                // Случайная задержка анимации
+                const delay = Math.random() * 5;
+                heart.style.animationDelay = `${delay}s`;
+                
+                // Случайный размер
+                const size = Math.random() * 20 + 10;
+                heart.style.fontSize = `${size}px`;
+                
+                // Случайный цвет
+                const colors = ['#ff4d6d', '#ff8fa3', '#ff758f', '#ff5678'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.color = color;
+                
+                heartsContainer.appendChild(heart);
+                
+                // Удаляем сердечко после анимации
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+        }
+        
+        // Создаем несколько сердечек при загрузке
+        window.addEventListener('load', function() {
+            createFlyingHearts(15);
+        });
+    </script>
+</body>
+</html>
