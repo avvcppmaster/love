@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Алсу · С днём рождения</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #1a1c2c 0%, #2a1e3a 100%);
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* падающие звёзды / сердечки */
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.4rem;
+            opacity: 0;
+            animation: floatHeart 8s linear forwards;
+            z-index: 10;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* главная карточка */
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 64px;
+            padding: 30px 28px 48px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        /* фото (опционально) */
+        .photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffb7c5;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background: #2e2440;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #FFDEE9, #FFB5C0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .birthday-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            padding: 6px 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #FFDEE9;
+            margin-bottom: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #f0eef7;
+            margin: 25px 0 20px;
+            padding: 0 10px;
+        }
+
+        .highlight {
+            color: #FFB7C5;
+            font-weight: 600;
+        }
+
+        .console-line {
+            background: #0a0c15;
+            border-radius: 20px;
+            padding: 18px 20px;
+            text-align: left;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            border-left: 4px solid #FFB7C5;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .console-line p {
+            margin: 6px 0;
+            color: #cbd5ff;
+        }
+
+        .prompt {
+            color: #9b87f5;
+        }
+
+        .cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .btn {
+            background: linear-gradient(95deg, #FF8AAE, #FFB7C5);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 32px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a0f20;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 280px;
+            font-family: inherit;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: scale(0.97);
+            background: linear-gradient(95deg, #FF759F, #FFA5B5);
+            box-shadow: 0 8px 22px rgba(255, 120, 160, 0.4);
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            color: #ccc;
+        }
+
+        /* секретная пасхалка */
+        .secret-trigger {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        @media (max-width: 550px) {
+            .card {
+                padding: 24px 18px 36px;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+            .message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- если хочешь добавить её фото – замени 'ВАША_ФОТО.jpg' и раскомментируй -->
+    <!-- <img class="photo" src="ВАША_ФОТО.jpg" alt="Алсу"> -->
+    
+    <div class="birthday-badge">
+        🎈 31 мая · новый уровень 🎈
+    </div>
+
+    <h1>С днём рождения,<br>Алсу</h1>
+
+    <div class="message">
+        Ты — причина, по которой я перестал <span class="highlight">соло-апать в жизни</span>.<br>
+        С тобой даже баги ощущаются как фичи ❤️
+    </div>
+
+    <!-- консольная шутка – их айти-флирт -->
+    <div class="console-line">
+        <p><span class="prompt">$</span> grep "ты мне нравишься" переписка.log</p>
+        <p><span class="prompt">></span> найдено 127 совпадений</p>
+        <p><span class="prompt">$</span> curl -X LOVE https://api.alsu.birthday --data "от Андрея"</p>
+        <p><span class="prompt">></span> HTTP/1.1 200 OK ❤️‍🔥<span class="cursor">_</span></p>
+    </div>
+
+    <div class="message" style="font-size:1rem;">
+        Желаю тебе, чтобы твой личный сервер был всегда стабилен,<br>
+        а память хранила только тёплые логи.<br>
+        Ты — мой самый любимый коммит в этом году.
+    </div>
+
+    <!-- кнопка с ироничным признанием -->
+    <button class="btn" id="surpriseBtn">🎁 Нажми, если веришь в магию</button>
+
+    <footer>
+        ⚡ развёрнуто на GitHub Pages с теплом и багами<br>
+        специально для тебя
+    </footer>
+</div>
+
+<script>
+    // создаём плавающие сердечки
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        heart.innerHTML = ['❤️', '🔥', '💖', '🌸', '✨', '💘'][Math.floor(Math.random() * 6)];
+        const size = Math.random() * 24 + 16;
+        heart.style.fontSize = size + 'px';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = Math.random() * 5 + 6 + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => {
+            heart.remove();
+        }, 9000);
+    }
+
+    setInterval(createHeart, 800);
+
+    // секретное сообщение и пасхалка "SHAWTY"
+    const btn = document.getElementById('surpriseBtn');
+    let clicked = false;
+
+    btn.addEventListener('click', () => {
+        if (clicked) return;
+        clicked = true;
+
+        // показываем всплывающее сообщение
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        overlay.style.backdropFilter = 'blur(6px)';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = '1000';
+        overlay.style.fontFamily = 'inherit';
+
+        const modal = document.createElement('div');
+        modal.style.maxWidth = '320px';
+        modal.style.background = '#1e1a2f';
+        modal.style.borderRadius = '48px';
+        modal.style.padding = '28px 24px';
+        modal.style.textAlign = 'center';
+        modal.style.boxShadow = '0 20px 40px rgba(0,0,0,0.5)';
+        modal.style.border = '1px solid #ffb7c5';
+        modal.innerHTML = `
+            <div style="font-size:3rem;">🤍</div>
+            <p style="color:#FFDEE9; margin:16px 0 12px; font-size:1.3rem; font-weight:500;">SHAWTY.</p>
+            <p style="color:#ccc; margin-bottom:20px;">Ты не бот, ты — целая вселенная.<br>И я рад, что случайно наткнулся на твою анкету.</p>
+            <button id="closeModal" style="background:#FF8AAE; border:none; border-radius:40px; padding:10px 28px; font-weight:bold; color:#1e1a2f; cursor:pointer;">✨ Закрыть ✨</button>
+        `;
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            overlay.remove();
+        });
+    });
+
+    // дополнительная скрытая пасхалка: консольное приветствие
+    console.log("%c🌸 С днюхой, Алсу! Ты лучший апдейт в жизни Андрея 🌸", "color: #ffb7c5; font-size: 16px; font-weight: bold;");
+    console.log("%cЯ просто код, а ты — его смысл. И да, он тебя обожает.", "color: #cdb4db;");
+
+    // если фото не загружено — ничего страшного, просто тихо
+</script>
+</body>
+</html>
